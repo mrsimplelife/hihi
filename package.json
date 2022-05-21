@@ -35,6 +35,6 @@
     "typescript": "4.6.4"
   },
   "stackblitz": {
-    "startCommand": "npm dev"
+    "startCommand": "yarn dev"
   }
 }
