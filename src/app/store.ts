@@ -11,8 +11,6 @@ import {
   REGISTER,
 } from 'redux-persist';
 import { useMemo } from 'react';
-
-// import storage from 'redux-persist/lib/storage';
 import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 
 const createNoopStorage = () => {
@@ -33,8 +31,6 @@ const storage =
   typeof window !== 'undefined'
     ? createWebStorage('local')
     : createNoopStorage();
-
-export default storage;
 
 const persistConfig = {
   key: 'primary',
