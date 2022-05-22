@@ -1,7 +1,6 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { counterSlice } from '../features/counter/counterSlice';
 import { persistSlice } from '../features/persist/persistSlice';
-import storage from 'redux-persist/lib/storage';
 import {
   persistReducer,
   FLUSH,
@@ -12,6 +11,8 @@ import {
   REGISTER,
 } from 'redux-persist';
 import { useMemo } from 'react';
+
+import storage from 'redux-persist/lib/storage';
 
 const persistConfig = {
   key: 'primary',
