@@ -1,17 +1,17 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import { useEffect } from "react";
-import { useAppDispatch } from "../app/hooks";
-import { initializeStore } from "../app/store";
-import Examples from "../components/example";
-import Counter from "../features/counter/Counter";
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import Image from 'next/image';
+import { useEffect } from 'react';
+import { useAppDispatch } from '../app/hooks';
+import { initializeStore } from '../app/store';
+import Examples from '../components/example';
+import Counter from '../features/counter/Counter';
 import {
   serverRenderClock,
   startClock,
-} from "../features/persist/persistSlice";
-import styles from "../styles/Home.module.css";
-import logo from '../../public/logo.svg'
+} from '../features/persist/persistSlice';
+import styles from '../styles/Home.module.css';
+import logo from '../../public/logo.svg';
 
 const IndexPage: NextPage = () => {
   const dispatch = useAppDispatch();
@@ -25,11 +25,7 @@ const IndexPage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header className={styles.header}>
-        <Image
-          src={logo}
-          className={styles.logo}
-          alt="logo"
-        />
+        <Image src={logo} className={styles.logo} alt="logo" />
         <Counter />
         <br />
         <Examples />
@@ -85,8 +81,6 @@ export async function getStaticProps() {
   const store = initializeStore();
   store.dispatch(serverRenderClock());
   return {
-    props: {
-      initialReduxState: store.getState(),
-    },
+    props: { initialReduxState: store.getState() },
   };
 }

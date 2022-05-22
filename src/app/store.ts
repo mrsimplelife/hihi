@@ -38,18 +38,40 @@ export const makeStore = (preloadedState?: any) => {
   });
 };
 
-export const initializeStore = (preloadedState?: AppState) => {
-  return makeStore(preloadedState);
-};
+let store: OptionalStore;
 
+export const initializeStore = (preloadedState?: AppState) => {
+  let _store = store ?? makeStore(preloadedState);
+
+  // 초기 Redux 상태가 있는 페이지로 이동한 후 해당 상태를 저장소의 현재 상태와 병합하고 새 저장소를 만듭니다
+  if (preloadedState && store) {
+    _store = makeStore({
+      ...store.getState(),
+      ...preloadedState,
+    });
+    // 현재 스토어 초기화
+    store = undefined;
+  }
+
+  // SSG 및 SSR의 경우 항상 새 저장소를 만듭니다.
+  if (typeof window === 'undefined') return _store;
+  // 클라이언트에서 한 번 스토어 생성
+  if (!store) store = _store;
+
+  return _store;
+};
 export const useStore = (initialState: AppState) => {
   const store = useMemo(() => initializeStore(initialState), [initialState]);
   return store;
 };
 
-export type AppState = ReturnType<ReturnType<typeof makeStore>['getState']>;
+export type OptionalStore = Store | undefined;
 
-export type AppDispatch = ReturnType<typeof makeStore>['dispatch'];
+export type Store = ReturnType<typeof makeStore>;
+
+export type AppState = ReturnType<Store['getState']>;
+
+export type AppDispatch = Store['dispatch'];
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,

@@ -10,7 +10,9 @@ export default function MyApp({
   pageProps: { initialReduxState, ...pageProps },
 }: AppProps) {
   const store = useStore(initialReduxState);
-  const persistor = persistStore(store);
+  const persistor = persistStore(store, {}, function () {
+    persistor.persist();
+  });
   return (
     <Provider store={store}>
       <PersistGate loading={<div>loading</div>} persistor={persistor}>
